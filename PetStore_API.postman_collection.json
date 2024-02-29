@@ -1,0 +1,227 @@
+{
+	"info": {
+		"_postman_id": "feaf65ac-b112-4beb-8ca4-9d6170769b4a",
+		"name": "PetStore_API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32908986"
+	},
+	"item": [
+		{
+			"name": "https://petstore.swagger.io/v2/user/createWithArray",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const randomnum = Math.floor(Math.random()*100+1);\r",
+							"var randomstr = \"john\"+Math.random().toString(36).substring(2);\r",
+							"\r",
+							"pm.environment.set(\"id\",randomnum);\r",
+							"pm.collectionVariables.set(\"username\", randomstr);\r",
+							"pm.collectionVariables.set(\"firstname\",randomstr);\r",
+							"pm.collectionVariables.set(\"lastname\",randomstr);\r",
+							"pm.collectionVariables.set(\"email\",randomstr+\"@gmail.com\");\r",
+							"pm.collectionVariables.set(\"password\",randomstr);\r",
+							"pm.collectionVariables.set(\"phonenumber\",\"111111111\");\r",
+							"pm.collectionVariables.set(\"userstatus\", 0);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code is 200\",()=>{\r",
+							"    pm.response.to.be.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "  {\r\n    \"id\": {{id}},\r\n    \"username\": \"{{username}}\",\r\n    \"firstName\": \"{{firstname}}\",\r\n    \"lastName\": \"{{lastname}}\",\r\n    \"email\": \"{{email}}\",\r\n    \"password\": \"{{password}}\",\r\n    \"phone\": \"{{phonenumber}}\",\r\n    \"userStatus\": {{userstatus}}\r\n  }"
+				},
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/user/",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"user",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Getuserdata",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code is 200\",()=>{\r",
+							"    pm.response.to.be.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"check both id's are equal\",()=>{\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.id).to.eql(pm.environment.get(\"id\"));\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/user/{{username}}",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"user",
+						"{{username}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var randomstr = \"john\"+Math.random().toString(36).substring(2);\r",
+							"\r",
+							"pm.collectionVariables.set(\"email\",randomstr+\"@gmail.com\");\r",
+							"pm.collectionVariables.set(\"phonenumber\",\"222222222\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "  {\r\n    \"id\": {{id}},\r\n    \"username\": \"{{username}}\",\r\n    \"firstName\": \"{{firstname}}\",\r\n    \"lastName\": \"{{lastname}}\",\r\n    \"email\": \"{{email}}\",\r\n    \"password\": \"{{password}}\",\r\n    \"phone\": \"{{phonenumber}}\",\r\n    \"userStatus\": {{userstatus}}\r\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/user/{{username}}",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"user",
+						"{{username}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code is 200\",()=>{\r",
+							"    pm.response.to.be.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/user/{{username}}",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"user",
+						"{{username}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "username",
+			"value": ""
+		},
+		{
+			"key": "firstname",
+			"value": ""
+		},
+		{
+			"key": "lastname",
+			"value": ""
+		},
+		{
+			"key": "email",
+			"value": ""
+		},
+		{
+			"key": "password",
+			"value": ""
+		},
+		{
+			"key": "phonenumber",
+			"value": ""
+		},
+		{
+			"key": "userstatus",
+			"value": ""
+		}
+	]
+}
